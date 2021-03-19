@@ -23,7 +23,7 @@ namespace BitternessAPI.Controllers
 
         // GET: api/Hops
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hop>>> GetHops()
+        public async Task<ActionResult<IEnumerable<Models.Hop>>> GetHops()
         {
             return await _context.Hops.ToListAsync();
         }
@@ -73,7 +73,7 @@ namespace BitternessAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<Hop>>> PostHop(Hop hop)
+        public async Task<ActionResult<IEnumerable<Models.Hop>>> PostHop(Models.Hop hop)
         {
             _context.Hops.Add(hop);
             await _context.SaveChangesAsync();
@@ -99,12 +99,12 @@ namespace BitternessAPI.Controllers
             return _context.Hops.Any(e => e.Id == id);
         }
 
-        private List<Hops> ConvertContextHopsToHops()
+        private List<IbuCalculations.Hop> ConvertContextHopsToHops()
         {
-            var hops = new List<Hops>();
+            var hops = new List<IbuCalculations.Hop>();
             foreach(var hop in _context.Hops)
             {
-                var newHop = new Hops(hop.Weight, hop.Alpha, (int)hop.BoilingTime);
+                var newHop = new IbuCalculations.Hop(hop.Name, hop.Weight, hop.Alpha, (int)hop.BoilingTime);
                 hops.Add(newHop);
             }
             return hops;

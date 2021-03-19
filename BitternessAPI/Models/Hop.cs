@@ -12,5 +12,6 @@ namespace BitternessAPI.Models
         public double Weight { get; set; }
         public double Alpha { get; set; }
         public double BoilingTime { get; set; }
+        public string Name { get; set; }
     }
 }

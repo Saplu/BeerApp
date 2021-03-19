@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace IbuCalculations
+{
+    public class Beer
+    {
+        public string Name { get; set; }
+        public List<Hop> Hops { get; set; }
+        public int Amount { get; set; }
+        public int Ibu { get; set; }
+        public double AlcoholPercentage { get; set; }
+        public double MaltExtractKg { get; set; }
+        public double DensityStart { get; set; }
+        public double DensityEnd { get; set; }
+
+        public Beer(string name)
+        {
+            Name = name;
+            Amount = 0;
+            Ibu = 0;
+            AlcoholPercentage = 0;
+            MaltExtractKg = 0;
+            DensityStart = 0;
+            DensityEnd = 0;
+        }
+
+        public Beer(string name, int amount, int ibu, double alcohol, double malt, double densityStart, double densityEnd)
+        {
+            Name = name;
+            Amount = amount;
+            Ibu = ibu;
+            AlcoholPercentage = alcohol;
+            MaltExtractKg = malt;
+            DensityStart = densityStart;
+            DensityEnd = densityEnd;
+        }
+
+    }
+}

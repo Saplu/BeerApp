@@ -7,10 +7,10 @@ namespace IbuCalculations
     public class BeerBitternessCalculator
     {
         private double _volume;
-        public List<Hops> Hops { get; set; }
+        public List<Hop> Hops { get; set; }
         public double Volume { get => _volume; set => setVolumeFiveGallons(value); }
 
-        public BeerBitternessCalculator(double volume, List<Hops> hops)
+        public BeerBitternessCalculator(double volume, List<Hop> hops)
         {
             setVolumeFiveGallons(volume);
             Hops = hops;

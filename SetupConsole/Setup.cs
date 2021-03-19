@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace SetupConsole
 {
-    class Program
+    class Setup
     {
         static void Main(string[] args)
         {

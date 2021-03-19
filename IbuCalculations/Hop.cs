@@ -4,18 +4,20 @@ using System.Text;
 
 namespace IbuCalculations
 {
-    public class Hops
+    public class Hop
     {
         private double _weight;
         public double AlphaAcid { get; set; }
+        public string Name { get; set; }
         public double Weight { get => getWeightOunces(); set => _weight = value; }
         public int BoilingTime { get; set; }
 
-        public Hops(double weight, double alpha, int boilingTime)
+        public Hop(string name, double weight, double alpha, int boilingTime)
         {
             _weight = weight;
             AlphaAcid = alpha;
             BoilingTime = boilingTime;
+            Name = name;
         }
 
         public double Utilization()
