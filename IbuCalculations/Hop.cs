@@ -10,6 +10,8 @@ namespace IbuCalculations
         public double AlphaAcid { get; set; }
         public string Name { get; set; }
         public double Weight { get => getWeightOunces(); set => _weight = value; }
+
+        public double WeightGrams { get => _weight; }
         public int BoilingTime { get; set; }
 
         public Hop(string name, double weight, double alpha, int boilingTime)

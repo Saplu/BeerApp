@@ -24,9 +24,10 @@ namespace IbuCalculations
             MaltExtractKg = 0;
             DensityStart = 0;
             DensityEnd = 0;
+            Hops = new List<Hop>();
         }
 
-        public Beer(string name, int amount, int ibu, double alcohol, double malt, double densityStart, double densityEnd)
+        public Beer(string name, int amount, int ibu, double alcohol, double malt, double densityStart, double densityEnd, List<Hop> hops)
         {
             Name = name;
             Amount = amount;
@@ -35,6 +36,7 @@ namespace IbuCalculations
             MaltExtractKg = malt;
             DensityStart = densityStart;
             DensityEnd = densityEnd;
+            Hops = hops;
         }
 
     }
