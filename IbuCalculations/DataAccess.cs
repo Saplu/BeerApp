@@ -60,12 +60,15 @@ namespace IbuCalculations
                     _command.Parameters.AddWithValue("@densityEnd", beer.DensityEnd);
                     _command.Parameters.AddWithValue("@maltExtractUsedKg", beer.MaltExtractKg);
                     _command.ExecuteNonQuery();
-
-                    foreach(var hop in beer.Hops)
+                    _command.CommandText = "USE BeerDb EXEC RemoveCurrentHopsFromBeer @title";
+                    _command.Parameters.Clear();
+                    _command.Parameters.AddWithValue("@title", beer.Name);
+                    _command.ExecuteNonQuery();
+                    foreach (var hop in beer.Hops)
                     {
                         UpsertBeerHasHop(hop, beer);
                     }
-
+                    
                     _connection.Close();
                 }
             }
