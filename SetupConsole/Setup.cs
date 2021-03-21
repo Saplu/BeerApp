@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace SetupConsole
 {
@@ -18,7 +19,6 @@ namespace SetupConsole
                 using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
                 {
                     conn.Open();
-                    Console.WriteLine("Connection opened!");
 
                     var sql = "CREATE DATABASE BeerDb";
                     var command = new SqlCommand(sql, conn);
@@ -53,7 +53,66 @@ namespace SetupConsole
                         "boiling_time_min INT NOT NULL)";
                     command.ExecuteNonQuery();
 
-                    Console.WriteLine("Tables created!");
+                    Console.WriteLine("Tables created! Press anything to continue.");
+                    Console.ReadLine();
+
+                    var commandString = "";
+                    using (var reader = new StreamReader("../../../../RemoveCurrentHopsFromBeer.sql"))
+                    {
+                        string line;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            commandString = String.Concat(commandString, line, " \r\n");
+                        }
+                    }
+
+                    command = new SqlCommand(commandString, conn);
+                    command.ExecuteNonQuery();
+                    commandString = "";
+                    using (var reader = new StreamReader("../../../../UpsertBeer.sql"))
+                    {
+                        string line;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            commandString = String.Concat(commandString, line, " \r\n");
+                        }
+                    }
+
+                    command = new SqlCommand(commandString, conn);
+                    command.ExecuteNonQuery();
+                    commandString = "";
+
+                    using (var reader = new StreamReader("../../../../UpsertBeerHasHop.sql"))
+                    {
+                        string line;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            commandString = String.Concat(commandString, line, " \r\n");
+                        }
+                    }
+
+                    command = new SqlCommand(commandString, conn);
+                    command.ExecuteNonQuery();
+                    commandString = "";
+
+                    using (var reader = new StreamReader("../../../../UpsertHop.sql"))
+                    {
+                        string line;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            commandString = String.Concat(commandString, line, " \r\n");
+                        }
+                    }
+
+                    command = new SqlCommand(commandString, conn);
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    Console.WriteLine("Procedures created, you are good to go!");
                     Console.ReadLine();
                 }
 
