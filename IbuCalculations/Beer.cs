@@ -8,7 +8,7 @@ namespace IbuCalculations
     {
         public string Name { get; set; }
         public List<Hop> Hops { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public int Ibu { get; set; }
         public double AlcoholPercentage { get; set; }
         public double MaltExtractKg { get; set; }
@@ -27,7 +27,7 @@ namespace IbuCalculations
             Hops = new List<Hop>();
         }
 
-        public Beer(string name, int amount, int ibu, double alcohol, double malt, double densityStart, double densityEnd, List<Hop> hops)
+        public Beer(string name, double amount, int ibu, double alcohol, double malt, double densityStart, double densityEnd, List<Hop> hops)
         {
             Name = name;
             Amount = amount;

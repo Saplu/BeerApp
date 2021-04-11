@@ -36,7 +36,7 @@ namespace SetupConsole
                         "CREATE Table Beer " +
                         "(id INT PRIMARY KEY IDENTITY, " +
                         "title VARCHAR(100) NOT NULL, " +
-                        "amount_l INT NOT NULL, " +
+                        "amount_l FLOAT NOT NULL, " +
                         "ibu INT, " +
                         "alcohol_percentage FLOAT, " +
                         "create_date DATETIME, " +

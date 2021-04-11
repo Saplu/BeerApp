@@ -2,7 +2,7 @@
 CREATE PROCEDURE [dbo].[upsertBeer]
 
 	@in_title varchar(100),
-	@in_amount int,
+	@in_amount float,
 	@in_ibu int,
 	@in_alcohol_percentage float,
 	@in_density_start float,
