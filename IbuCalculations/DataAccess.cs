@@ -22,14 +22,72 @@ namespace IbuCalculations
             _command = new SqlCommand("", _connection);
         }
 
+        public List<Beer> GetBeers()
+        {
+            List<Beer> beers = new List<Beer>();
+            try
+            {
+                _connection.ConnectionString = _builder.ConnectionString;
+                using (_connection)
+                {
+                    Beer beer = new Beer();
+                    List<Hop> hops = new List<Hop>();
+                    var id = 0;
+                    var previous = -1;
+                    _connection.Open();
+                    _command.CommandText = "SELECT b.id, b.title, b.amount_l, b.ibu, b.alcohol_percentage, b.density_start, b.density_end, " +
+                        "b.malt_extract_used_kg, h.title FROM Beer b JOIN Hop h ON " +
+                        "h.id IN(select hop_id from Beer_has_hop where beer_id = b.id)";
+
+                    var reader = _command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = reader.GetInt32(0);
+                        if (previous == -1)
+                        {
+                            previous = id;
+                        }
+                        if (id != previous && beer.Name != null)
+                        {
+                            previous = id;
+                            beers.Add(beer);
+                            beer = new Beer();
+                        }
+
+                        beer.Name = reader.GetString(1);
+                        beer.Amount = reader.GetDouble(2);
+                        beer.Ibu = reader.GetInt32(3);
+                        beer.AlcoholPercentage = reader.GetDouble(4);
+                        beer.DensityStart = reader.GetDouble(5);
+                        beer.DensityEnd = reader.GetDouble(6);
+                        beer.MaltExtractKg = reader.GetDouble(7);
+
+                        var hop = new Hop();
+                        hop.Name = reader.GetString(8);
+                        beer.Hops.Add(hop);
+                    }
+                    beers.Add(beer);
+                }
+                _connection.Close();
+                return beers;
+            }
+            catch(Exception ex)
+            {
+                _connection.Close();
+                throw ex;
+            }
+        }
+
         public void UpsertHopConnection(Hop hop)
         {
             try
             {
+                _connection.ConnectionString = _builder.ConnectionString;
                 using (_connection)
                 {
                     _connection.Open();
                     UpsertHop(hop);
+                    _connection.Close();
                 }
             }
             catch(Exception ex)
@@ -43,6 +101,7 @@ namespace IbuCalculations
         {
             try
             {
+                _connection.ConnectionString = _builder.ConnectionString;
                 using (_connection) {
                     _connection.Open();
                     foreach (var hop in beer.Hops)

@@ -15,6 +15,18 @@ namespace IbuCalculations
         public double DensityStart { get; set; }
         public double DensityEnd { get; set; }
 
+        public Beer()
+        {
+            Name = null;
+            Amount = 0;
+            Ibu = 0;
+            AlcoholPercentage = 0;
+            MaltExtractKg = 0;
+            DensityStart = 0;
+            DensityEnd = 0;
+            Hops = new List<Hop>();
+        }
+
         public Beer(string name)
         {
             Name = name;
@@ -39,5 +51,9 @@ namespace IbuCalculations
             Hops = hops;
         }
 
+        public override string ToString()
+        {
+            return $"Name: {Name}, Alc.: {AlcoholPercentage}, Ibu: {Ibu}";
+        }
     }
 }

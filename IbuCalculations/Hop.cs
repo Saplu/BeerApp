@@ -14,6 +14,14 @@ namespace IbuCalculations
         public double WeightGrams { get => _weight; }
         public int BoilingTime { get; set; }
 
+        public Hop()
+        {
+            _weight = 0;
+            AlphaAcid = 0;
+            BoilingTime = 0;
+            Name = null;
+        }
+
         public Hop(string name, double weight, double alpha, int boilingTime)
         {
             _weight = weight;
@@ -45,6 +53,11 @@ namespace IbuCalculations
         private double getWeightOunces()
         {
             return _weight * 0.0352739619;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Alpha acid: {AlphaAcid}, Weight: {_weight}, Boiling time: {BoilingTime}";
         }
     }
 }
