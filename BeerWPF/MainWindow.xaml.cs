@@ -1,18 +1,8 @@
 ﻿using IbuCalculations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BeerWPF
 {
@@ -25,6 +15,7 @@ namespace BeerWPF
         private Beer _beer;
         private Hop _hop;
         private BeerBitternessCalculator _calc;
+        private List<Beer> _beers;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,15 +25,22 @@ namespace BeerWPF
             {
                 new Hop() 
             });
+            _beers = new List<Beer>();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BeerListBox.Items.Clear();
-            var beers = _da.GetBeers();
-            foreach(var item in beers)
+            try
             {
-                BeerListBox.Items.Add(item.ToString());
+                BeerListBox.Items.Clear();
+                _beers = _da.GetBeers();
+                foreach (var item in _beers)
+                {
+                    BeerListBox.Items.Add(item.ToString());
+                }
+            }
+            catch(Exception)
+            {
             }
         }
 
@@ -171,8 +169,38 @@ namespace BeerWPF
             {
                 _beer.Hops.RemoveAt(HopListBox.SelectedIndex);
                 _calc.Hops.RemoveAt(HopListBox.SelectedIndex);
-                HopListBox.Items.RemoveAt(HopListBox.SelectedIndex);
+                HopListBox.Items.Clear();
+                foreach(var item in _beer.Hops)
+                {
+                    HopListBox.Items.Add(item);
+                }
                 IbuLabel.Content = _calc.Bitterness().ToString();
+            }
+        }
+
+        private void BeerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count != 0)
+            {
+                _beer = _beers[BeerListBox.SelectedIndex];
+                BeerNameLabel.Text = _beer.Name;
+                AmountLabel.Text = _beer.Amount.ToString();
+                AlcoholLabel.Text = _beer.AlcoholPercentage.ToString();
+                DensityStartLabel.Text = _beer.DensityStart.ToString();
+                DensityEndLabel.Text = _beer.DensityEnd.ToString();
+                MaltLabel.Text = _beer.MaltExtractKg.ToString();
+                HopNameLabel.Text = null;
+                AlphaLabel.Text = null;
+                BoilLabel.Text = null;
+                HopWeightLabel.Text = null;
+                _calc.Volume = _beer.Amount;
+                HopListBox.Items.Clear();
+                foreach (var item in _beer.Hops)
+                {
+                    _calc.Hops.Add(new Hop(item.Name, item.Weight, item.AlphaAcid, item.BoilingTime));
+                    HopListBox.Items.Add(item);
+                }
+                _calc.Hops.Add(new Hop());
             }
         }
     }

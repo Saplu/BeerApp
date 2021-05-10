@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
         <Button Content="List Beers" HorizontalAlignment="Left" Margin="35,35,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <ListBox x:Name="BeerListBox" Margin="35,86,479,72"/>
+        <ListBox x:Name="BeerListBox" Margin="35,86,479,72" SelectionChanged="BeerListBox_SelectionChanged"/>
         <Button x:Name="SaveBeerButton" Content="Save Beer" HorizontalAlignment="Left" Margin="667,113,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.172,-0.231" Click="SaveBeerButtonClick"/>
         <Label x:Name="InfoLabel" Content="Insert beer data:" HorizontalAlignment="Left" Margin="468,11,0,0" VerticalAlignment="Top" AutomationProperties.HelpText=""/>
         <TextBox x:Name="BeerNameLabel" HorizontalAlignment="Left" Margin="471,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" AutomationProperties.HelpText="Name" TextChanged="BeerNameLabel_TextChanged"/>
