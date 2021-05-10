@@ -167,10 +167,13 @@ namespace BeerWPF
 
         private void RemoveHop_Click(object sender, SelectionChangedEventArgs e)
         {
-            _beer.Hops.RemoveAt(HopListBox.SelectedIndex);
-            _calc.Hops.RemoveAt(HopListBox.SelectedIndex);
-            HopListBox.Items.RemoveAt(HopListBox.SelectedIndex);
-            IbuLabel.Content = _calc.Bitterness().ToString();
+            if (e.AddedItems.Count != 0)
+            {
+                _beer.Hops.RemoveAt(HopListBox.SelectedIndex);
+                _calc.Hops.RemoveAt(HopListBox.SelectedIndex);
+                HopListBox.Items.RemoveAt(HopListBox.SelectedIndex);
+                IbuLabel.Content = _calc.Bitterness().ToString();
+            }
         }
     }
 }
