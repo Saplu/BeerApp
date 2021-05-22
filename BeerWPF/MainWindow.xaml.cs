@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace BeerWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private DataAccess _da;
@@ -16,6 +14,7 @@ namespace BeerWPF
         private Hop _hop;
         private BeerBitternessCalculator _calc;
         private List<Beer> _beers;
+        private DispatcherTimer _timer;
         public MainWindow()
         {
             InitializeComponent();
@@ -26,6 +25,10 @@ namespace BeerWPF
                 new Hop() 
             });
             _beers = new List<Beer>();
+            _hop = new Hop();
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 10);
+            _timer.Tick += _timer_Tick;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,8 +42,10 @@ namespace BeerWPF
                     BeerListBox.Items.Add(item.ToString());
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                InfoLabel.Content = ex.Message;
+                _timer.Start();
             }
         }
 
@@ -63,26 +68,38 @@ namespace BeerWPF
                 }
                 HopListBox.Items.Clear();
                 InfoLabel.Content = "Beer added!";
+                _timer.Start();
             }
             catch (Exception ex)
             {
                 InfoLabel.Content = ex.Message;
+                _timer.Start();
             }
         }
 
         private void HopButton_Click(object sender, RoutedEventArgs e)
         {
-            _beer.Hops.Add(_hop);
-            _calc.Hops.Add(new Hop());
-            _hop = new Hop();
-            HopNameLabel.Text = null;
-            AlphaLabel.Text = null;
-            BoilLabel.Text = null;
-            HopWeightLabel.Text = null;
-            HopListBox.Items.Clear();
-            foreach(var item in _beer.Hops)
+            try
             {
-                HopListBox.Items.Add(item.ToString());
+                _beer.Hops.Add(_hop);
+                _calc.Hops.Add(new Hop());
+                _hop = new Hop();
+                HopNameLabel.Text = null;
+                AlphaLabel.Text = null;
+                BoilLabel.Text = null;
+                HopWeightLabel.Text = null;
+                HopListBox.Items.Clear();
+                foreach (var item in _beer.Hops)
+                {
+                    HopListBox.Items.Add(item.ToString());
+                }
+                InfoLabel.Content = "Hop added!";
+                _timer.Start();
+            }
+            catch(Exception ex)
+            {
+                InfoLabel.Content = ex.Message;
+                _timer.Start();
             }
         }
 
@@ -157,6 +174,8 @@ namespace BeerWPF
 
         private void HopWeightLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
+            InfoLabel.Content = "Beer added!";
+            _timer.Start();
             if (int.TryParse(HopWeightLabel.Text, out int value))
                 _hop.Weight = value;
             else _hop.Weight = 0;
@@ -165,46 +184,67 @@ namespace BeerWPF
 
         private void RemoveHop_Click(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count != 0)
+            try
             {
-                _beer.Hops.RemoveAt(HopListBox.SelectedIndex);
-                _calc.Hops.RemoveAt(HopListBox.SelectedIndex);
-                HopListBox.Items.Clear();
-                foreach(var item in _beer.Hops)
+                if (e.AddedItems.Count != 0)
                 {
-                    HopListBox.Items.Add(item);
+                    _beer.Hops.RemoveAt(HopListBox.SelectedIndex);
+                    _calc.Hops.RemoveAt(HopListBox.SelectedIndex);
+                    HopListBox.Items.Clear();
+                    foreach (var item in _beer.Hops)
+                    {
+                        HopListBox.Items.Add(item);
+                    }
+                    IbuLabel.Content = _calc.Bitterness().ToString();
                 }
-                IbuLabel.Content = _calc.Bitterness().ToString();
+            }
+            catch(Exception ex)
+            {
+                InfoLabel.Content = ex.Message;
+                _timer.Start();
             }
         }
 
         private void BeerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count != 0)
+            try
             {
-                _beer = _beers[BeerListBox.SelectedIndex];
-                BeerNameLabel.Text = _beer.Name;
-                AmountLabel.Text = _beer.Amount.ToString();
-                AlcoholLabel.Text = _beer.AlcoholPercentage.ToString();
-                DensityStartLabel.Text = _beer.DensityStart.ToString();
-                DensityEndLabel.Text = _beer.DensityEnd.ToString();
-                MaltLabel.Text = _beer.MaltExtractKg.ToString();
-                HopNameLabel.Text = null;
-                AlphaLabel.Text = null;
-                BoilLabel.Text = null;
-                HopWeightLabel.Text = null;
-                _calc.Volume = _beer.Amount;
-                HopListBox.Items.Clear();
-                foreach (var item in _beer.Hops)
+                if (e.AddedItems.Count != 0)
                 {
-                    _calc.Hops.Add(new Hop(item.Name, item.Weight, item.AlphaAcid, item.BoilingTime));
-                    HopListBox.Items.Add(item);
+                    _beer = _beers[BeerListBox.SelectedIndex];
+                    BeerNameLabel.Text = _beer.Name;
+                    AmountLabel.Text = _beer.Amount.ToString();
+                    AlcoholLabel.Text = _beer.AlcoholPercentage.ToString();
+                    DensityStartLabel.Text = _beer.DensityStart.ToString();
+                    DensityEndLabel.Text = _beer.DensityEnd.ToString();
+                    MaltLabel.Text = _beer.MaltExtractKg.ToString();
+                    HopNameLabel.Text = null;
+                    AlphaLabel.Text = null;
+                    BoilLabel.Text = null;
+                    HopWeightLabel.Text = null;
+                    _calc.Volume = _beer.Amount;
+                    HopListBox.Items.Clear();
+                    foreach (var item in _beer.Hops)
+                    {
+                        _calc.Hops.Add(new Hop(item.Name, item.Weight, item.AlphaAcid, item.BoilingTime));
+                        HopListBox.Items.Add(item);
+                    }
+                    _calc.Hops.Add(new Hop());
                 }
-                _calc.Hops.Add(new Hop());
+            }
+            catch(Exception ex)
+            {
+                InfoLabel.Content = ex.Message;
+                _timer.Start();
             }
         }
 
         private string VerifyDouble(string value) => value.Replace('.', ',');
-        
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            InfoLabel.Content = "";
+            _timer.Stop();
+        }
     }
 }
