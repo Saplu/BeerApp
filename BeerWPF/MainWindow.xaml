@@ -37,6 +37,7 @@
         <ListBox x:Name="HopListBox" Margin="383,338,131,10" SelectionChanged="RemoveHop_Click"/>
         <Button x:Name="HopButton" Content="Add hop" HorizontalAlignment="Left" Margin="628,314,0,0" VerticalAlignment="Top" Click="HopButton_Click"/>
         <Label x:Name="InfoLabel" Content="" HorizontalAlignment="Left" Margin="35,389,0,0" VerticalAlignment="Top" Width="286"/>
+        <Button x:Name="RemoveBeerButton" Content="Remove selected beer" HorizontalAlignment="Left" Margin="201,37,0,0" VerticalAlignment="Top" Click="RemoveBeerButton_Click"/>
 
     </Grid>
 </Window>

@@ -29,8 +29,6 @@ namespace BeerWPF
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 10);
             _timer.Tick += _timer_Tick;
-
-            _da.RemoveBeer("TestBeer");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -247,6 +245,21 @@ namespace BeerWPF
         {
             InfoLabel.Content = "";
             _timer.Stop();
+        }
+
+        private void RemoveBeerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Seriously delete selected beer?", "", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                var success = _da.RemoveBeer(_beer.Name);
+                if (success == 0)
+                {
+                    InfoLabel.Content = "Beer successfully deleted :(";
+                }
+                else InfoLabel.Content = "No beer found to be deleted, than God.";
+                _timer.Start();
+            }
         }
     }
 }

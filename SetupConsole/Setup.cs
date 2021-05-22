@@ -110,6 +110,20 @@ namespace SetupConsole
 
                     command = new SqlCommand(commandString, conn);
                     command.ExecuteNonQuery();
+                    commandString = "";
+
+                    using (var reader = new StreamReader("../../../../RemoveBeer.sql"))
+                    {
+                        string line;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            commandString = String.Concat(commandString, line, " \r\n");
+                        }
+                    }
+
+                    command = new SqlCommand(commandString, conn);
+                    command.ExecuteNonQuery();
                     conn.Close();
 
                     Console.WriteLine("Procedures created, you are good to go!");

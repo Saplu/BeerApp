@@ -105,6 +105,12 @@ namespace IbuCalculations
                 _connection.ConnectionString = _builder.ConnectionString;
                 using (_connection) {
                     _connection.Open();
+
+                    SqlTransaction transaction;
+                    transaction = _connection.BeginTransaction();
+                    _command.Connection = _connection;
+                    _command.Transaction = transaction;
+
                     foreach (var hop in beer.Hops)
                     {
                         UpsertHop(hop);
@@ -120,10 +126,12 @@ namespace IbuCalculations
                     _command.Parameters.AddWithValue("@densityEnd", beer.DensityEnd);
                     _command.Parameters.AddWithValue("@maltExtractUsedKg", beer.MaltExtractKg);
                     _command.ExecuteNonQuery();
+
                     _command.CommandText = "USE BeerDb EXEC RemoveCurrentHopsFromBeer @title";
                     _command.Parameters.Clear();
                     _command.Parameters.AddWithValue("@title", beer.Name);
                     _command.ExecuteNonQuery();
+
                     foreach (var hop in beer.Hops)
                     {
                         UpsertBeerHasHop(hop, beer);
@@ -144,7 +152,7 @@ namespace IbuCalculations
 
         }
 
-        public void RemoveBeer(string name)
+        public int RemoveBeer(string name)
         {
             try
             {
@@ -157,9 +165,10 @@ namespace IbuCalculations
                     _command.Parameters.AddWithValue("@name", name);
                     var result = _command.ExecuteScalar();
                     _connection.Close();
+                    return (int)result;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _connection.Close();
                 throw ex;
