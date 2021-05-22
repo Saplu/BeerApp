@@ -146,7 +146,24 @@ namespace IbuCalculations
 
         public void RemoveBeer(string name)
         {
-
+            try
+            {
+                _connection.ConnectionString = _builder.ConnectionString;
+                using (_connection)
+                {
+                    _connection.Open();
+                    _command.CommandText = "USE BeerDb EXEC RemoveBeer @name";
+                    _command.Parameters.Clear();
+                    _command.Parameters.AddWithValue("@name", name);
+                    var result = _command.ExecuteScalar();
+                    _connection.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                _connection.Close();
+                throw ex;
+            }
         }
 
         private void UpsertHop(Hop hop)

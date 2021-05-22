@@ -29,6 +29,8 @@ namespace BeerWPF
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 10);
             _timer.Tick += _timer_Tick;
+
+            _da.RemoveBeer("TestBeer");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
