@@ -174,8 +174,6 @@ namespace BeerWPF
 
         private void HopWeightLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            InfoLabel.Content = "Beer added!";
-            _timer.Start();
             if (int.TryParse(HopWeightLabel.Text, out int value))
                 _hop.Weight = value;
             else _hop.Weight = 0;
@@ -212,16 +210,8 @@ namespace BeerWPF
                 if (e.AddedItems.Count != 0)
                 {
                     _beer = _beers[BeerListBox.SelectedIndex];
-                    BeerNameLabel.Text = _beer.Name;
-                    AmountLabel.Text = _beer.Amount.ToString();
-                    AlcoholLabel.Text = _beer.AlcoholPercentage.ToString();
-                    DensityStartLabel.Text = _beer.DensityStart.ToString();
-                    DensityEndLabel.Text = _beer.DensityEnd.ToString();
-                    MaltLabel.Text = _beer.MaltExtractKg.ToString();
-                    HopNameLabel.Text = null;
-                    AlphaLabel.Text = null;
-                    BoilLabel.Text = null;
-                    HopWeightLabel.Text = null;
+                    SetBeerLabels();
+                    ClearHops();
                     _calc.Volume = _beer.Amount;
                     HopListBox.Items.Clear();
                     foreach (var item in _beer.Hops)
@@ -249,17 +239,43 @@ namespace BeerWPF
 
         private void RemoveBeerButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Seriously delete selected beer?", "", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show($"Seriously delete {_beer.Name}?", "", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 var success = _da.RemoveBeer(_beer.Name);
                 if (success == 0)
                 {
-                    InfoLabel.Content = "Beer successfully deleted :(";
+                    InfoLabel.Content = $"{_beer.Name} successfully deleted :(";
+                    _beer = new Beer();
+                    ClearHops();
+                    SetBeerLabels();
                 }
                 else InfoLabel.Content = "No beer found to be deleted, than God.";
                 _timer.Start();
             }
+        }
+
+        private void ClearHops()
+        {
+            HopNameLabel.Text = null;
+            AlphaLabel.Text = null;
+            BoilLabel.Text = null;
+            HopWeightLabel.Text = null;
+            _calc.Hops = new List<Hop>()
+            {
+                new Hop()
+            };
+            HopListBox.Items.Clear();
+        }
+
+        private void SetBeerLabels()
+        {
+            BeerNameLabel.Text = _beer.Name;
+            AmountLabel.Text = _beer.Amount.ToString();
+            AlcoholLabel.Text = _beer.AlcoholPercentage.ToString();
+            DensityStartLabel.Text = _beer.DensityStart.ToString();
+            DensityEndLabel.Text = _beer.DensityEnd.ToString();
+            MaltLabel.Text = _beer.MaltExtractKg.ToString();
         }
     }
 }

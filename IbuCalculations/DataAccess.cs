@@ -9,6 +9,7 @@ namespace IbuCalculations
         private SqlConnectionStringBuilder _builder;
         private SqlConnection _connection;
         private SqlCommand _command;
+        private SqlTransaction _transaction;
 
         public DataAccess()
         {
@@ -106,10 +107,9 @@ namespace IbuCalculations
                 using (_connection) {
                     _connection.Open();
 
-                    SqlTransaction transaction;
-                    transaction = _connection.BeginTransaction();
+                    _transaction = _connection.BeginTransaction();
                     _command.Connection = _connection;
-                    _command.Transaction = transaction;
+                    _command.Transaction = _transaction;
 
                     foreach (var hop in beer.Hops)
                     {
@@ -136,14 +136,22 @@ namespace IbuCalculations
                     {
                         UpsertBeerHasHop(hop, beer);
                     }
-                    
+                    _transaction.Commit();
                     _connection.Close();
                 }
             }
             catch (Exception ex)
             {
-                _connection.Close();
-                throw ex;
+                try
+                {
+                    _transaction.Rollback();
+                    _connection.Close();
+                    throw ex;
+                }
+                catch(Exception ex2)
+                {
+                    throw ex2;
+                }
             }
         }
 
