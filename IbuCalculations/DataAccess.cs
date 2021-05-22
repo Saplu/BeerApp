@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace IbuCalculations
 {
@@ -35,9 +34,6 @@ namespace IbuCalculations
                     var id = 0;
                     var previous = -1;
                     _connection.Open();
-                    //_command.CommandText = "SELECT b.id, b.title, b.amount_l, b.ibu, b.alcohol_percentage, b.density_start, b.density_end, " +
-                    //    "b.malt_extract_used_kg, ISNULL(h.title, '') FROM Beer b JOIN Hop h ON " +
-                    //    "h.id IN(select hop_id from Beer_has_hop where beer_id = b.id)";
 
                     _command.CommandText = "SELECT b.id, b.title, b.amount_l, b.ibu, b.alcohol_percentage, b.density_start, b.density_end, " +
                         "b.malt_extract_used_kg, ISNULL(h.title, '') FROM Beer b " +

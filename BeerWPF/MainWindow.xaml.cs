@@ -62,10 +62,11 @@ namespace BeerWPF
                         ((TextBox)item).Text = null;
                 }
                 HopListBox.Items.Clear();
+                InfoLabel.Content = "Beer added!";
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                InfoLabel.Content = ex.Message;
             }
         }
 
@@ -83,7 +84,6 @@ namespace BeerWPF
             {
                 HopListBox.Items.Add(item.ToString());
             }
-            var asd = _beer;
         }
 
         private void BeerNameLabel_TextChanged(object sender, TextChangedEventArgs e)
@@ -93,7 +93,7 @@ namespace BeerWPF
 
         private void AmountLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(AmountLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(AmountLabel.Text), out double value))
             {
                 _beer.Amount = value;
                 _calc.Volume = value;
@@ -103,25 +103,25 @@ namespace BeerWPF
 
         private void AlcoholLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(AlcoholLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(AlcoholLabel.Text), out double value))
                 _beer.AlcoholPercentage = value;
         }
 
         private void DensityStartLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(DensityStartLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(DensityStartLabel.Text), out double value))
                 _beer.DensityStart = value;
         }
 
         private void DensityEndLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(DensityEndLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(DensityEndLabel.Text), out double value))
                 _beer.DensityEnd = value;
         }
 
         private void MaltLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(MaltLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(MaltLabel.Text), out double value))
                 _beer.MaltExtractKg = value;
         }
 
@@ -129,7 +129,7 @@ namespace BeerWPF
         {
             _hop = new Hop();
             _hop.Name = HopNameLabel.Text;
-            if (double.TryParse(AlphaLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(AlphaLabel.Text), out double value))
                 _hop.AlphaAcid = value;
             if (int.TryParse(BoilLabel.Text, out int boil))
                 _hop.BoilingTime = boil;
@@ -141,7 +141,7 @@ namespace BeerWPF
 
         private void AlphaLabel_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(AlphaLabel.Text, out double value))
+            if (double.TryParse(VerifyDouble(AlphaLabel.Text), out double value))
                 _hop.AlphaAcid = value;
             else _hop.AlphaAcid = 0;
             IbuLabel.Content = _calc.Bitterness().ToString();
@@ -203,5 +203,8 @@ namespace BeerWPF
                 _calc.Hops.Add(new Hop());
             }
         }
+
+        private string VerifyDouble(string value) => value.Replace('.', ',');
+        
     }
 }
