@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace IbuCalculations
 {
@@ -54,6 +53,20 @@ namespace IbuCalculations
         public override string ToString()
         {
             return $"Name: {Name}, Alc.: {AlcoholPercentage}, Ibu: {Ibu}";
+        }
+
+        public void MarkDuplicateHops()
+        {
+            var groups = Hops.GroupBy(x => x.Name)
+                .Where(g => g.Count() > 1);
+            foreach(var group in groups)
+            {
+                var itemsInGroup = group.ToArray();
+                for (int i = 1; i < itemsInGroup.Count(); i++)
+                {
+                    itemsInGroup[i].Name += $"({i})";
+                }
+            }
         }
     }
 }

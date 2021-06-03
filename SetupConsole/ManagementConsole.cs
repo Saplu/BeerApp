@@ -25,6 +25,18 @@ namespace SetupConsole
             //{
             //    Console.WriteLine(ex.Message);
             //}
+
+            var beer = new Beer("test", 1, 1, 1, 1, 1, 1, new List<Hop>()
+            {
+                new Hop("eka", 1, 1, 1),
+                new Hop("toka", 1, 1, 1),
+                new Hop("eka", 1, 1, 1),
+                new Hop("kolmas", 1, 1, 1),
+                new Hop("toka", 1, 1, 1),
+                new Hop("eka", 1, 1, 1)
+            });
+
+            beer.MarkDuplicateHops();
         }
     }
 }

@@ -54,6 +54,7 @@ namespace BeerWPF
             try
             {
                 _beer.Ibu = Convert.ToInt32(_calc.Bitterness());
+                _beer.MarkDuplicateHops();
                 _da.UpsertBeer(_beer);
                 _beer = new Beer();
                 _calc = new BeerBitternessCalculator(0, new List<Hop>()
