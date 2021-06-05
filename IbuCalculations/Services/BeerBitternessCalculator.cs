@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using IbuCalculations.Models;
 
-namespace IbuCalculations
+namespace IbuCalculations.Services
 {
     public class BeerBitternessCalculator
     {

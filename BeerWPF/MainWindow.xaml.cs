@@ -1,4 +1,5 @@
-﻿using IbuCalculations;
+﻿using IbuCalculations.Models;
+using IbuCalculations.Services;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -9,7 +10,7 @@ namespace BeerWPF
 {
     public partial class MainWindow : Window
     {
-        private DataAccess _da;
+        private BeerDAO _da;
         private Beer _beer;
         private Hop _hop;
         private BeerBitternessCalculator _calc;
@@ -21,7 +22,7 @@ namespace BeerWPF
             InitializeComponent();
             Width = 800;
             Height = 600;
-            _da = new DataAccess();
+            _da = new BeerDAO();
             _beer = new Beer();
             _calc = new BeerBitternessCalculator(0, new List<Hop>()
             {

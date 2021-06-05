@@ -1,12 +1,10 @@
-﻿using System;
+﻿using BitternessAPI.Models;
+using IbuCalculations.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BitternessAPI.Models;
-using IbuCalculations;
 
 namespace BitternessAPI.Controllers
 {
@@ -99,12 +97,12 @@ namespace BitternessAPI.Controllers
             return _context.Hops.Any(e => e.Id == id);
         }
 
-        private List<IbuCalculations.Hop> ConvertContextHopsToHops()
+        private List<IbuCalculations.Models.Hop> ConvertContextHopsToHops()
         {
-            var hops = new List<IbuCalculations.Hop>();
+            var hops = new List<IbuCalculations.Models.Hop>();
             foreach(var hop in _context.Hops)
             {
-                var newHop = new IbuCalculations.Hop(hop.Name, hop.Weight, hop.Alpha, (int)hop.BoilingTime);
+                var newHop = new IbuCalculations.Models.Hop(hop.Name, hop.Weight, hop.Alpha, (int)hop.BoilingTime);
                 hops.Add(newHop);
             }
             return hops;

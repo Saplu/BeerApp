@@ -1,6 +1,7 @@
 ﻿using IbuCalculations;
 using System;
 using System.Collections.Generic;
+using IbuCalculations.Models;
 
 namespace SetupConsole
 {

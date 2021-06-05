@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace IbuCalculations
+namespace IbuCalculations.Models
 {
     public class Beer
     {

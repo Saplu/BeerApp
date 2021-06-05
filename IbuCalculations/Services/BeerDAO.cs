@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using IbuCalculations.Models;
 
-namespace IbuCalculations
+namespace IbuCalculations.Services
 {
-    public class DataAccess
+    public class BeerDAO
     {
         private SqlConnectionStringBuilder _builder;
         private SqlConnection _connection;
         private SqlCommand _command;
         private SqlTransaction _transaction;
 
-        public DataAccess()
+        public BeerDAO()
         {
             _builder = new SqlConnectionStringBuilder();
             _builder.DataSource = "localhost";

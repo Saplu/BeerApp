@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IbuCalculations;
+using IbuCalculations.Services;
 using System.Collections.Generic;
+using IbuCalculations.Models;
 
 namespace BitternessTests
 {
