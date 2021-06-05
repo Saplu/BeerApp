@@ -17,7 +17,10 @@ namespace BeerWPF
         private DispatcherTimer _timer;
         public MainWindow()
         {
+
             InitializeComponent();
+            Width = 800;
+            Height = 600;
             _da = new DataAccess();
             _beer = new Beer();
             _calc = new BeerBitternessCalculator(0, new List<Hop>()
