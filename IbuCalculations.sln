@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbuCalculations", "IbuCalcu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitternessTests", "BitternessTests\BitternessTests.csproj", "{57CF1E28-CA4A-42D4-906F-91373DB8897E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitternessAPI", "BitternessAPI\BitternessAPI.csproj", "{762ACBE7-85E9-49F4-9D4F-23A2809FF1FF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetupConsole", "SetupConsole\SetupConsole.csproj", "{37158064-9C07-486D-BD08-9C2BF0558D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerWPF", "BeerWPF\BeerWPF.csproj", "{4F2A6550-16B0-49B8-A048-F1CB89A393C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerWPF", "BeerWPF\BeerWPF.csproj", "{4F2A6550-16B0-49B8-A048-F1CB89A393C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAPI", "BeerAPI\BeerAPI.csproj", "{2A5CCDCC-2030-4E9A-ABA5-D8EF0625E871}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		{57CF1E28-CA4A-42D4-906F-91373DB8897E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57CF1E28-CA4A-42D4-906F-91373DB8897E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57CF1E28-CA4A-42D4-906F-91373DB8897E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{762ACBE7-85E9-49F4-9D4F-23A2809FF1FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{762ACBE7-85E9-49F4-9D4F-23A2809FF1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{762ACBE7-85E9-49F4-9D4F-23A2809FF1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{762ACBE7-85E9-49F4-9D4F-23A2809FF1FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37158064-9C07-486D-BD08-9C2BF0558D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37158064-9C07-486D-BD08-9C2BF0558D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37158064-9C07-486D-BD08-9C2BF0558D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{4F2A6550-16B0-49B8-A048-F1CB89A393C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F2A6550-16B0-49B8-A048-F1CB89A393C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F2A6550-16B0-49B8-A048-F1CB89A393C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A5CCDCC-2030-4E9A-ABA5-D8EF0625E871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5CCDCC-2030-4E9A-ABA5-D8EF0625E871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5CCDCC-2030-4E9A-ABA5-D8EF0625E871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5CCDCC-2030-4E9A-ABA5-D8EF0625E871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

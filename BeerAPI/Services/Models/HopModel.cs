@@ -1,6 +1,11 @@
-﻿namespace IbuCalculations.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BeerAPI.Services.Models
 {
-    public class Hop
+    public class HopModel
     {
         private double _weight;
         public double AlphaAcid { get; set; }
@@ -9,8 +14,9 @@
 
         public double WeightGrams { get => _weight; }
         public int BoilingTime { get; set; }
+        public double Utilization { get => getUtilization(); }
 
-        public Hop()
+        public HopModel()
         {
             _weight = 0;
             AlphaAcid = 0;
@@ -18,7 +24,7 @@
             Name = null;
         }
 
-        public Hop(string name, double weight, double alpha, int boilingTime)
+        public HopModel(string name, double weight, double alpha, int boilingTime)
         {
             _weight = weight;
             AlphaAcid = alpha;
@@ -26,9 +32,9 @@
             Name = name;
         }
 
-        public double Utilization()
+        private double getUtilization()
         {
-            var level =(BoilingTime - 1) / 5;
+            var level = (BoilingTime - 1) / 5;
             switch (level)
             {
                 case 0: return 5;
