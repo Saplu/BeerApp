@@ -52,7 +52,7 @@ namespace IbuCalculations.Models
 
         public override string ToString()
         {
-            return $"Name: {Name}, Alc.: {AlcoholPercentage}, Ibu: {Ibu}";
+            return $"{Name}, Alc.: {AlcoholPercentage}, Ibu: {Ibu}";
         }
 
         public void MarkDuplicateHops()

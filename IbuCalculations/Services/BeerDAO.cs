@@ -38,7 +38,7 @@ namespace IbuCalculations.Services
                     _connection.Open();
 
                     _command.CommandText = "SELECT b.id, b.title, b.amount_l, b.ibu, b.alcohol_percentage, b.density_start, b.density_end, " +
-                        "b.malt_extract_used_kg, ISNULL(h.title, '') FROM Beer b " +
+                        "b.malt_extract_used_kg, ISNULL(h.title, ''), ISNULL(h.alpha_percentage, 0), ISNULL(bhh.weight_g, 0), ISNULL(bhh.boiling_time_min, 0) FROM Beer b " +
                         "LEFT OUTER JOIN Beer_has_hop bhh ON bhh.beer_id = b.id " +
                         "LEFT OUTER JOIN Hop h ON h.id = bhh.hop_id";
 
@@ -67,6 +67,9 @@ namespace IbuCalculations.Services
 
                         var hop = new Hop();
                         hop.Name = reader.GetString(8);
+                        hop.AlphaAcid = reader.GetDouble(9);
+                        hop.Weight = reader.GetInt32(10);
+                        hop.BoilingTime = reader.GetInt32(11);
                         if (hop.Name != null && hop.Name.Length != 0) beer.Hops.Add(hop);
                     }
                     beers.Add(beer);
