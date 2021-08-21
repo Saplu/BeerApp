@@ -221,7 +221,7 @@ namespace BeerWPF
                     HopListBox.Items.Clear();
                     foreach (var item in _beer.Hops)
                     {
-                        _calc.Hops.Add(new Hop(item.Name, item.Weight, item.AlphaAcid, item.BoilingTime));
+                        _calc.Hops.Add(new Hop(item.Name, item.WeightGrams, item.AlphaAcid, item.BoilingTime));
                         HopListBox.Items.Add(item);
                     }
                     _calc.Hops.Add(new Hop());
