@@ -162,7 +162,7 @@ namespace BeerWPF
         }
 
         private void AlphaLabel_TextChanged(object sender, TextChangedEventArgs e)
-        {
+       {
             if (double.TryParse(VerifyDouble(AlphaLabel.Text), out double value))
                 _hop.AlphaAcid = value;
             else _hop.AlphaAcid = 0;
@@ -234,7 +234,7 @@ namespace BeerWPF
             }
         }
 
-        private string VerifyDouble(string value) => value.Replace('.', ',');
+        private string VerifyDouble(string value) => value.Replace(',', '.');
 
         private void _timer_Tick(object sender, EventArgs e)
         {
