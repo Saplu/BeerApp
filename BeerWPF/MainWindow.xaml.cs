@@ -165,7 +165,7 @@ namespace BeerWPF
         }
 
         private void AlphaLabel_TextChanged(object sender, TextChangedEventArgs e)
-       {
+        {
             if (double.TryParse(VerifyDouble(AlphaLabel.Text), NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
                 _hop.AlphaAcid = value;
             else _hop.AlphaAcid = 0;
@@ -228,6 +228,7 @@ namespace BeerWPF
                         HopListBox.Items.Add(item);
                     }
                     _calc.Hops.Add(new Hop());
+                    IbuLabel.Content = _calc.Bitterness().ToString();
                 }
             }
             catch(Exception ex)
