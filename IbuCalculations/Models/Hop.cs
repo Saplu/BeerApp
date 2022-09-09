@@ -28,6 +28,12 @@
 
         public double Utilization()
         {
+            // Handle 0 as dry hop -> no bitterness yield
+            if (BoilingTime == 0)
+            {
+                return 0;
+            }
+
             var level =(BoilingTime - 1) / 5;
             switch (level)
             {
