@@ -5,7 +5,7 @@
         private double _weight;
         public double AlphaAcid { get; set; }
         public string Name { get; set; }
-        public double Weight { get => getWeightOunces(); set => _weight = value; }
+        public double Weight { get => GetWeightOunces(); set => _weight = value; }
 
         public double WeightGrams { get => _weight; }
         public int BoilingTime { get; set; }
@@ -35,24 +35,24 @@
             }
 
             var level =(BoilingTime - 1) / 5;
-            switch (level)
+            return level switch
             {
-                case 0: return 5;
-                case 1: return 6;
-                case 2: return 8;
-                case 3: return 10.1;
-                case 4: return 12.1;
-                case 5: return 15.3;
-                case 6: return 18.8;
-                case 7: return 22.8;
-                case 8: return 26.9;
-                case 9: return 28.1;
-                case 10: return 30;
-                case 11: return 30;
-                default: return 31;
-            }
+                0 => 5,
+                1 => 6,
+                2 => 8,
+                3 => 10.1,
+                4 => 12.1,
+                5 => 15.3,
+                6 => 18.8,
+                7 => 22.8,
+                8 => 26.9,
+                9 => 28.1,
+                10 => 30,
+                11 => 30,
+                _ => 31,
+            };
         }
-        private double getWeightOunces()
+        private double GetWeightOunces()
         {
             return _weight * 0.0352739619;
         }
